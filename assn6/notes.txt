@@ -1,0 +1,44 @@
+I first downloaded the randall-git.tgz and uploaded to to the lnxsrv and ran tar -xzvf randall-git.tgz to unpack the tar file. Running ls -a showed me the .git directory created. 
+
+I then left this directory and ran git clone assign6 cloned-repo and looked at the contents of .gitignore, COPYING, Makefile, and randall.c.
+
+I started by writing a make check to test the program. I wrote a test that runs randall with input of 40, and checks that the ouptut is also 40.
+
+Then, I moved the corresponding code from randall.c into the files, options, rand64-hw, and rand64-sw. I had to edit the functions to no longer be static.
+
+I then started to work on the options.c file. I first had to understand how arguments were handled in C (with argc and argv). I was then able to start parsing arguments to either handle regular input, -i input, or -o input.
+
+I used getopt to see when a -i flag was passed in and if so, to assign the inputarg to be whatever the input was.
+
+I just focused on implementing rdrand first, so I then added logic within randall.c to do the normal behavior (check if hardware supported, if so generate that many bytes).
+
+Then integrated the functionalities of lrand, /F, stdio, and writeNbytes. 
+
+Then made a shell scripting file to time my implementation.
+
+time dd if=/dev/urandom ibs=8192 obs=8192 count=16384 >/dev/null
+time ./randall 133562368 >/dev/null
+time ./randall 133562368 | cat >/dev/null
+time ./randall 133562368 >rand.data
+time ./randall -i /dev/urandom 133562368 >/dev/null
+
+Running chmodt +x time.sh, ./time.sh I got these results:
+real    0m0.951s
+user    0m0.016s
+sys     0m0.923s
+
+real    0m4.107s
+user    0m4.063s
+sys     0m0.016s
+
+real    0m4.248s
+user    0m4.097s
+sys     0m0.286s
+
+real    0m4.889s
+user    0m3.541s
+sys     0m0.693s
+
+real    0m3.063s
+user    0m1.677s
+sys     0m1.152s
