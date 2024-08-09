@@ -1,0 +1,7 @@
+#!/bin/bash
+
+export LC_ALL='C'
+
+SORTEDWORDS="${SORTEDWORDS:=./sorted.words}"
+
+tr -cs 'A-Za-z' '[\n*]' | sort -u | comm -23 - <(tr -cs 'A-Za-z' '[\n*]' < "$SORTEDWORDS" | sort -u)

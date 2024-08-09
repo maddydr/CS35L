@@ -1,0 +1,30 @@
+1. Using which sh, it gives the path path /usr/bin/sh. Then using which sleep we see this command is located with the path /usr/local/cs/bin/sleep. Lastly, using which type we see the path for type is /usr/bin/type   → which command shows the location of a command 
+
+2. Sed, seq.
+Using command find /usr/bin -type f -name 'se?', we see that the two files are called sed and seq. Using the man command we see that it prints numbers from first to last in steps of increment. Sed is a stream editor used to perform basic text transformation on an input stream, where an input stream is a file or input from a pipeline. Seq is used to print a sequence of numbers, from FIRST to LAST, with a number to increment by.
+
+3. Executing readlink -f /usr/local/cs/bin/emacs we see the actual file being executed is /usr/local/cs/emacs-29.1/bin/emacs-29.1
+
+4. Executing /usr/bin/gcc -v we see that gcc version 8.5.0 20210514 (Red Hat 8.5.0-4) (GCC). Executing gcc -v we see gcc version 13.2.0 (GCC).  Both programs are different versions because there are different version of C code to compile using gcc.
+
+5. The "u+sx" part means the user/owner is being granted execute permissions and that anyone else who attempts to use the file will do so "as the user", meaning in this case they will always have execute permissions. The "o-w" part means other users not in the group are being stripped of write permissions.
+
+6. Using stat -c %y /usr/local/cs we see the date last modified was 2023-09-24. Then executing find /usr/local/cs -type d -newermt "2023-09-24" | sort | head -n 5
+Using the command find /usr/local/cs -type d -newer /usr/local/cs/lib -print | sort | head -n 5 we get:
+/usr/local/cs
+/usr/local/cs/bin
+/usr/local/cs/.del
+/usr/local/cs/.del/gettext-0.22
+/usr/local/cs/gettext-0.22.2
+
+7. Running find /usr/local/cs/src/python/Python-* -type f | wc -l we see there are 4457 regular files.
+
+8. Running find /usr/local/cs/bin -type l -exec echo {} \; | wc -l we see there are 373 symbolic links
+
+9. Executing find /usr/lib64/ -maxdepth 1 -printf '%T+ %p\n' | sort | head -n 1 we see the oldest file is libbz2.so which is a symlink. Running ls -la /usr/lib64/libbz2.so we see lrwxrwxrwx. 1 root root 11 Aug 12  2018 /usr/lib64/libbz2.so -> libbz2.so.1.
+
+10. The Emacs commands that have transpose in their names are transpose-chars, transpose-lines, transpose-paragraphs, transpose-regions, transpose-sentences, transpose-sexps, and transpose-words.
+
+11. The emacs yank function pastes text from your clipboard, or more precisely your last "kill"/delete. C-k can be used to kill a line, adding it to the kill ring. C-y yanks all the text from the kill ring and pastes it. M-y kill current text and yanks earlier killed text.
+
+12. I used the ps axjf command to see all of the ancestor and descendant processes of my own login shell process.
