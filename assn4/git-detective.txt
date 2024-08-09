@@ -1,0 +1,53 @@
+To find the IDs for this exact change, I ran the initial command git log | grep "merge-tree" which output results of everything containing the text merge-tree. I refined my search to be git log --grep "git merge-tree" and parsed the previous commits until I found the one with the same description. This revealed
+commit bcf22f29df87f25582de0ac9274d1567fa16be6f
+Merge: 7f8a6caee5 92481d1b26
+Author: Junio C Hamano <gitster@pobox.com>
+Date:   Tue Oct 25 17:11:34 2022 -0700
+
+    Merge branch 'js/merge-ort-in-read-only-repo' into maint-2.38
+    
+    In read-only repositories, "git merge-tree" tried to come up with a
+    merge result tree object, which it failed (which is not wrong) and
+    led to a segfault (which is bad), which has been corrected.
+    
+    * js/merge-ort-in-read-only-repo:
+      merge-ort: return early when failing to write a blob
+      merge-ort: fix segmentation fault in read-only repositories
+
+But this is a merge file and we desire the original file. To find the original file I went on the Github website and found the corresponding patch which revealed this
+
+commit 0b55d930a69692c7f4e7b90e35fa41f6c46df4bc
+Author: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Date:   Wed Sep 28 07:29:21 2022 +0000
+
+    merge-ort: fix segmentation fault in read-only repositories
+    
+    If the blob/tree objects cannot be written, we really need the merge
+    operations to fail, and not to continue (and then try to access the tree
+    object which is however still set to `NULL`).
+    
+    Let's stop ignoring the return value of `write_object_file()` and
+    `write_tree()` and set `clean = -1` in the error case.
+    
+    Reviewed-by: Elijah Newren <newren@gmail.com>
+    Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+
+diff --git a/merge-ort.c b/merge-ort.c
+index 99dcee2db8..f3bdce1041 100644
+--- a/merge-ort.c
++++ b/merge-ort.c
+@@ -3571,15 +3571,15 @@ static int tree_entry_order(const void *a_, const void *b_)
+                                 b->string, strlen(b->string), bmi->result.mode);
+ }
+ 
+-static void write_tree(struct object_id *result_oid,
+-                      struct string_list *versions,
+-                      unsigned int offset,
+-                      size_t hash_size)
++static int write_tree(struct object_id *result_oid,
++                     struct string_list *versions,
++                     unsigned int offset,
++                     size_t hash_size)
+
+which tells us our desired information.

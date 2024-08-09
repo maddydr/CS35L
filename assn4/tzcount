@@ -1,0 +1,28 @@
+#!/usr/bin/env python3
+
+import sys
+
+# use python to take the standard input
+# parse lines and look for "date" and the -700 lines
+# have a counter and count/map the instances
+
+# making a dictionary to store time zone and the corresponding count
+timezone_counts = {}
+
+for line in sys.stdin:
+    if line.startswith("CommitDate:"):
+        # separates the 'Date:' and onward into 2 chunks, strips any leading or trialing white space
+        date_part = line.split("CommitDate: ")[1].strip() 
+
+        # extract the time zone portion of the line
+        timezone = date_part[-5:]
+
+        if timezone in timezone_counts:
+            timezone_counts[timezone] += 1
+        else:
+            timezone_counts[timezone] = 1
+# sort by timezone in ascending order
+sorted_results = sorted(timezone_counts.items(), key=lambda item: int(item[0])) 
+for timezone, count in sorted_results:
+    print(f"{timezone} {count}")
+

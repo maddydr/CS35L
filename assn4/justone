@@ -1,0 +1,7 @@
+#!/bin/bash
+
+#navigates to the cloned directory
+# cd /u/cs/ugrad/reyes/CS35L/assn4/tz
+
+#compares last commit to current commit and puts output in file justone.out
+git diff HEAD~1 HEAD

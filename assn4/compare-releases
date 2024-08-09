@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# git diff command comparing 1st input to second
+git diff $1 $2 
+
+
+

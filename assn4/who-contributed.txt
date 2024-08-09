@@ -1,0 +1,20 @@
+First I ran grep -n "Even newspaper reports present contradictory information" *
+to find out the line number and which file this statement was in. I got the output 
+northamerica:900:# and wrote "Even newspaper reports present contradictory information."
+I then knew the line was in the file northamerica. I ran 
+git blame -L 900 northamerica
+To find the commit history of line 900 in this file. I got the output:
+c8f960ec7 (Paul Eggert        2013-09-02 08:09:06 -0700  900) # and wrote "Even newspaper reports present contradictory information."
+23ed2d7fd (Arthur David Olson 2006-04-03 10:04:43 -0400  901) # Those Hoosiers!  Such a flighty and changeable people!
+c12b43274 (Arthur David Olson 1995-12-21 11:43:42 -0500  902) # Fortunately, most of the complexity occurred before our cutoff date of 1970.
+c12b43274 (Arthur David Olson 1995-12-21 11:43:42 -0500  903) #
+c12b43274 (Arthur David Olson 1995-12-21 11:43:42 -0500  904) # Other than Indianapolis, the Indiana place names are so nondescript
+… 
+
+This revealed the commit hash of the desired change to be c8f960ec7. Running
+git show c8f960ec7 I saw the commit comment that it was a change to move links back to primary files.
+
+I instead ran 
+git log -S "Even newspaper reports present contradictory information." northamerica
+
+And saw that Arthur David Olson was the author of this change.

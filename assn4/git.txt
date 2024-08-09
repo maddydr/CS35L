@@ -1,0 +1,7 @@
+I cloned Git's git repository and ran git branch. This revealed that I had access to the * master branch and nothing else. Running git branch in ~eggert/src/github/git revealed the output
+  maint
+* master
+  next
+  seen
+  todo
+ This tells us that eggert's repository has local access to maint, next, seen, and todo and is making changes to those files locally. I have a clone and thus do not have access to these changes because they have not been committed to the master branch to be used remotely. Additionally, eggerts copy is behind commits whereas mine is a new clone.
