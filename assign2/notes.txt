@@ -1,0 +1,44 @@
+Warmup: 
+
+1. Executing (* (expt 2 (- 607 1)) (- (expt 2 607) 1)) we find the perfect 14th number.
+
+2. Executing (+(ceiling (logb (* (expt 2 (- 607 1)) (- (expt 2 607) 1)))) 1) we see that 1213 bits are needed to represent the 14th perfect number.
+
+3. When executing this in the minibuffer we get 0000000000000000000000000000000000000000000000000000000000000000, #x1fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffc0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+
+4. Typing C-h k C-h k gives us a description of what C-h k does. The C-h k command describes what a key sequence does. So typing C-h k C-h k, it not surprisingly shows us what C-h k does. This relates to C-h b because C-h b is another key-binding that brings up the describe-bindings and lists all the keybindings. C-h k lets us see a specific keybindings function.
+
+5. Typing C-h k M-SPC we learn that M-SPC runs the command cycle-spacing (found in global-map), which is an interactive byte-compiled Lisp function in ‘simple.el’. This relates to keybindings because it tells us command cycle-spacing is keybinded with M-SPC.
+
+6. The more general function is cycle-spacing. Invoking this using M-: we type (cycle-spacing) in the minibuffer and get the desired changes. Typing M-x then cycle-spacing also gives us similar results.
+
+
+Homework:
+1. When the script is invoked on an empty file, we receive the following error:
+This raises IndexError if seq is empty
+IndexError: list index out of range
+
+This error is received because we require a non-empty file as an input to run the function.
+
+2. When invoked on Python3 we receive the following error: SyntaxError: invalid syntax. This is because our code uses syntax specific to Python 2, hence why Python 3 cannot recognize it. 
+
+3. When running shuf.py on python 3 we get SyntaxError: invalid syntax. This makes sense because we are using things like argparse which is specific to python 3.
+
+4. Benchmarks:
+- /usr/bin/python3:             user: .736       sys: .044
+- /usr/local/cs/bin/python3:    user: .560       sys: .039
+- shuf:                         user: .079       sys: .010
+Running lscpu we get this important information about CPU:
+Architecture:        x86_64
+CPU(s):              4
+Vendor ID:           GenuineIntel
+CPU family:          6
+Model:               85
+Model name:          Intel(R) Xeon(R) Silver 4116 CPU @ 2.10GHz
+Stepping:            4
+CPU MHz:             2095.079
+
+Running cat /etc/os-release we get:
+NAME="Red Hat Enterprise Linux"
+VERSION="8.5 (Ootpa)"
+  
