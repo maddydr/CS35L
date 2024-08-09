@@ -1,0 +1,48 @@
+First when approaching this I laid out pseudocode for what needed to be accomplished.
+   1. Put a cap on the number of moves (6 total)
+   2. Add ability to remove the third move, and replace it to a new position or undo and put in same position
+   3. Can only move it to adjacent positions
+   4. If the move is in the center position, it must be moved and not kept there, or there must be a winning move
+   
+I began with introducing a numMoves variable to keep track of how many moves in the game have been taken and incrementing this every time a move is made. I added a condition to check if the number of moves was > 5 (because it starts at index 0) and if it was, to allow for X’s and O’s to be removed. 
+
+To do this, check whose turn it is set the corresponding square to null. Decrement the moves counter to indicate this removed piece now needs to be replaced. 
+
+I then worked on the ‘move’ being placed back on the board. This should be handled like the original tic-tac-toe feature, just adding a new ‘move’ to the board. Only do this when we are sure there are less than 6 total moves on the board. Add a corresponding X or O based on what was most recently removed.
+
+Now that we can remove and add X’s and O’s from the board, I implemented an adjacency feature to only add a removed X or O to a certain spot. To do this, I first defined the board’s valid spots in a nested array. For example, squares[0] valid adjacent spots are [1, 3, 4]. Then, when handling the move, check if the nested array with your oldPos as the index and see if the newly desired position i is a valid adjacent spot. If it is, enter the if statement, and place a corresponding X or O. Update the setSquares, numMoves, and switch the players turn. Keep regular logic if the board doesn’t have 6 moves yet.
+
+I then wanted to add the ‘undo’ feature. I needed to handle if a player picked up an existing move, but couldn’t move it to any adjacent positions, or just chose to put it back in the same position. I did this by adding an additional if statement checking if the max number of moves had been taken, and if the oldPos from which we removed a item from was the same as the newly desired position. If so, place the corresponding X or O. 
+
+The next part was the tricky part of forcing the user to move the center piece or to make a winning move. I added an if statement first checking if oldPos >= 0 meaning that we had surpassed the 6 move mark, checking if an X move was next, and checking if there was an X occupying the center square. If these conditions were met, enter the if statement and let the user place the corresponding move in a new position. Check if this new move had a winning outcome by calling calculateWinner with the new array. If it was a winning move, end the game with a winning statement. Otherwise, add an if statement to handle picking up the non-center piece and not moving it to a winning spot. Force the user to put it back where it was originally placed or until it is placed in a winning position.
+
+Lastly, to add a reset button I made a function called HandleGoToGameStart which set all the squares to null, setNumMoves(0), set oldPos(-1), and setXisNext(true). This effectively resets the game and wipes the board. 
+
+Run this with the command npm start and you can play the chorus lapilli game!
+
+Running npm pack –dry-run we get:
+npm notice 
+npm notice 📦  vy6j3f@0.0.0
+npm notice === Tarball Contents === 
+npm notice 92.9kB README.md                 
+npm notice 625B   package.json              
+npm notice 24.8kB public/favicon.ico        
+npm notice 1.4kB  public/index.html         
+npm notice 298B   public/manifest.json      
+npm notice 6.5kB  src/App.js                
+npm notice 2.3kB  src/createServiceWorker.js
+npm notice 256B   src/index.js              
+npm notice 157B   src/package.json          
+npm notice 234B   src/public/index.html     
+npm notice 969B   src/styles.css            
+npm notice === Tarball Details === 
+npm notice name:          vy6j3f                                  
+npm notice version:       0.0.0                                   
+npm notice filename:      vy6j3f-0.0.0.tgz                        
+npm notice package size:  39.6 kB                                 
+npm notice unpacked size: 130.5 kB                                
+npm notice shasum:        ae17f3c16fcdaa3abda3571a28d8c54fa59ba517
+npm notice integrity:     sha512-9VvrtFRa5PDuW[...]vuXmU+xXwMdeQ==
+npm notice total files:   11                                      
+npm notice 
+vy6j3f-0.0.0.tgz
